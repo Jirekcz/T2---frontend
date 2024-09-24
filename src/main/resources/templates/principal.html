@@ -14,18 +14,19 @@
             <h1>Rueditas</h1>
         </div>
 
-        <!-- Mostrar numero de placa ingresado(test) -->
-        <div class="mt-5 mb-4">
-            Bienvenido <span th:text="inicioModel.placa"></span>
-        </div>
-
         <!-- Lista -->
         <div>
-            <li>Marca: <span th:text="inici"></span></li>
-            <li>Modelo: <span th:text="inicioModel.modelo"></span></li>
-            <li>Nro asientos: <span th:text="inicioModel.nroAsientos"></span></li>
-            <li>Precio: <span th:text="inicioModel.precio"></span></li>
-            <li>Color: <span th:text="inicioModel.color"></span></li>
+            <li>Placa: <span th:text="${inicioModel.placa()}"></span></li>
+            <li>Marca: <span th:text="${inicioModel.marca()}"></span></li>
+            <li>Modelo: <span th:text="${inicioModel.modelo()}"></span></li>
+            <li>Nro asientos: <span th:text="${inicioModel.nroAsientos()}"></span></li>
+            <li>Precio: <span th:text="${inicioModel.precio()}"></span></li>
+            <li>Color: <span th:text="${inicioModel.color()}"></span></li>
+        </div>
+
+        <!-- Boton regresar -->
+        <div>
+            <input type="button" onclick="history.back()" name="Regresar" value="Regresar" class="btn btn-primary">
         </div>
     </div>
 </body>

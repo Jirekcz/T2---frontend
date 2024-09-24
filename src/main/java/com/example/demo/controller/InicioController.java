@@ -21,7 +21,7 @@ public class InicioController {
 
     @GetMapping("/inicio")
     public String inicio(Model model) {
-        InicioModel inicioModel = new InicioModel("00", "", "");
+        InicioModel inicioModel = new InicioModel("00", "", "", "", "", "", "", "");
         model.addAttribute("inicioModel", inicioModel);
         return "inicio";
     }
@@ -30,30 +30,30 @@ public class InicioController {
     public String buscar(@RequestParam("placa") String placa, Model model) {
         // Validamos los campos de entrada
         if (placa == null || placa.trim().length() == 0) {
-            InicioModel inicioModel = new InicioModel("01", "ERROR: Completar los campos", "");
+            InicioModel inicioModel = new InicioModel("01", "ERROR: Completar los campos", "", "", "", "", "", "");
             model.addAttribute("inicioModel", inicioModel);
             return "inicio";
         }
 
         try {
             // Invocamos al API
-            String endpoint = "";
+            String endpoint = "http://localhost:8081/buscar/search";
             InicioRequestDTO inicioRequestDTO = new InicioRequestDTO(placa);
             InicioResponseDTO inicioResponseDTO = restTemplate.postForObject(endpoint, inicioRequestDTO, InicioResponseDTO.class);
 
             // Validar respuesta
             if (inicioResponseDTO.codigo().equals("00")) {
-                InicioModel inicioModel = new InicioModel("00", "", inicioResponseDTO.marca());
+                InicioModel inicioModel = new InicioModel("00", "Placa encontrada :D", inicioRequestDTO.placa(), inicioResponseDTO.marca(), inicioResponseDTO.modelo(), inicioResponseDTO.nroAsientos(), inicioResponseDTO.precio(), inicioResponseDTO.color());
                 model.addAttribute("inicioModel", inicioModel);
                 return "principal";
             } else {
-                InicioModel inicioModel = new InicioModel("02", "ERROR: Busqueda fallida", "");
+                InicioModel inicioModel = new InicioModel("02", "ERROR: Debe ingresar una placa correcta", "", "", "", "", "", "");
                 model.addAttribute("inicioModel", inicioModel);
                 return "inicio";
             }
 
         } catch (Exception e) {
-            InicioModel inicioModel = new InicioModel("01", "", "");
+            InicioModel inicioModel = new InicioModel("01", "", "", "", "", "", "", "");
             model.addAttribute("inicioModel", inicioModel);
             System.out.println(e.getMessage());
             return "inicio";
